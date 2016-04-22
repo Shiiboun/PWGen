@@ -13,7 +13,7 @@ def convertBytesToPassword(hashedBytes, length):
     while number > 0 and len(passwort) < length:
         passwort = passwort + passwortCharacters[number % len(passwortCharacters)]
     number = number // len(passwortCharacters)
-return passwort
+    return passwort
 
 masterPasswort = input('Masterpasswort: ')
 domain = input('Domain: ')
@@ -22,7 +22,7 @@ while len(domain) < 1:
     domain = input('Domain: ')
 hashString = domain + masterPasswort
 hashedBytes = pdkdf2_hmac(
-    'sha512'
+    'sha512',
     hashString.encode('utf-8'),
     salt.encode('utf-8'),
     4096)
