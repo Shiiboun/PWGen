@@ -21,7 +21,7 @@ while len(domain) < 1:
     print('Bitte gib eine Domain an.')
     domain = input('Domain: ')
 hashString = domain + masterPasswort
-hashedBytes = pdkdf2_hmac(
+hashedBytes = pbkdf2_hmac(
     'sha512',
     hashString.encode('utf-8'),
     salt.encode('utf-8'),
