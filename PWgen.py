@@ -1,30 +1,30 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from hashlib import pbkdf2_hmac
 
 lowerCaseLetters = list('abcdefghijklmnopqrstuvwxyz')
 upperCaseLetters = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
 numbers = list('0123456789')
-specialCharacters = list('"!§$%&/()=?+#-.,;:_')
-passwortCharacters = lowerCaseLetters + upperCaseLetters + numbers + specialCharacters
+specialCharacters = list('"!§$%&/()=?+#-.,')
+password_characters = lowerCaseLetters + upperCaseLetters + numbers + specialCharacters
 salt = "treehousegaming"
 
-def convertBytesToPassword(hashedBytes, length):
-    number = int.from_bytes(hashedBytes, byteorder='big')
-    passwort = ''
-    while number > 0 and len(passwort) < length:
-        passwort = passwort + passwortCharacters[number % len(passwortCharacters)]
-    number = number // len(passwortCharacters)
-    return passwort
+def convert_bytes_to_password(hashed_bytes, length):
+    number = int.from_bytes(hashed_bytes, byteorder='big')
+    password = ''
+    while number > 0 and len(password) < length:
+        password = password + password_characters[number % len(password_characters)]
+        number = number // len(password_characters)
+    return password
 
-masterPasswort = input('Masterpasswort: ')
+master_password = input('Masterpasswort: ')
 domain = input('Domain: ')
 while len(domain) < 1:
     print('Bitte gib eine Domain an.')
     domain = input('Domain: ')
-hashString = domain + masterPasswort
-hashedBytes = pbkdf2_hmac(
-    'sha512',
-    hashString.encode('utf-8'),
-    salt.encode('utf-8'),
-    4096)
-print('Passwort: ' + convertBytesToPassword(hashedBytes, 10))
-input()
+
+hash_string = domain + master_password
+hashed_bytes = pbkdf2_hmac('sha512', hash_string.encode('utf-8'), salt.encode('utf-8'), 4096)
+print('passwort: ' + convert_bytes_to_password(hashed_bytes, 10))
